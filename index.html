@@ -22,6 +22,7 @@
                 <span>Rankup</span>
             </a>
             <div class="nav-links">
+                <a href="guide.html">Guide</a>
                 <a href="#features">Features</a>
                 <a href="https://discord.gg/WsnV3MphrJ" target="_blank">Support</a>
                 <a href="https://discord.com/oauth2/authorize?client_id=867132685871480883"
@@ -47,11 +48,16 @@
         </div>
     </section>
 
+    <div class="horizontal-divider">
+        <div class="horizontal-bar">
+            <div class="bar-fill-horizontal"></div>
+        </div>
+    </div>
+
     <main>
         <section class="demo-section">
             <div class="container">
                 <div class="demo-card fade-in">
-                    <!-- Mock Discord Embed for Promotion -->
                     <div class="discord-embed">
                         <div class="embed-content">
                             <div class="embed-author">
@@ -88,43 +94,47 @@
             <div class="container">
                 <h2 class="fade-in">Climb the <span class="highlight">Hierarchy</span></h2>
                 <div class="progression-container fade-in">
-                    <div class="vertical-bar">
-                        <div class="bar-fill"></div>
-                    </div>
-                    <div class="rank-labels">
-                        <div class="rank-item" data-level="5">
-                            <div class="rank-icon">⭐</div>
+                    <div class="ranks-left">
+                        <div class="rank-item rank-left">
                             <div class="rank-info">
                                 <h3>General</h3>
                                 <p>Top of the command chain</p>
                             </div>
+                            <div class="rank-icon">⭐</div>
                         </div>
-                        <div class="rank-item" data-level="4">
+                        <div class="rank-item rank-left">
+                            <div class="rank-info">
+                                <h3>Captain</h3>
+                                <p>Team command authority</p>
+                            </div>
+                            <div class="rank-icon">🔰</div>
+                        </div>
+                        <div class="rank-item rank-left">
+                            <div class="rank-info">
+                                <h3>Recruit</h3>
+                                <p>Entry level position</p>
+                            </div>
+                            <div class="rank-icon">🎯</div>
+                        </div>
+                    </div>
+
+                    <div class="vertical-bar">
+                        <div class="bar-fill"></div>
+                    </div>
+
+                    <div class="ranks-right">
+                        <div class="rank-item rank-right">
                             <div class="rank-icon">🎖️</div>
                             <div class="rank-info">
                                 <h3>Colonel</h3>
                                 <p>Senior leadership role</p>
                             </div>
                         </div>
-                        <div class="rank-item" data-level="3">
-                            <div class="rank-icon">🔰</div>
-                            <div class="rank-info">
-                                <h3>Captain</h3>
-                                <p>Team command authority</p>
-                            </div>
-                        </div>
-                        <div class="rank-item" data-level="2">
+                        <div class="rank-item rank-right">
                             <div class="rank-icon">📋</div>
                             <div class="rank-info">
                                 <h3>Lieutenant</h3>
                                 <p>Junior officer rank</p>
-                            </div>
-                        </div>
-                        <div class="rank-item" data-level="1">
-                            <div class="rank-icon">🎯</div>
-                            <div class="rank-info">
-                                <h3>Recruit</h3>
-                                <p>Entry level position</p>
                             </div>
                         </div>
                     </div>
@@ -231,6 +241,7 @@
                 <p>&copy; 2025 Rankup Bot. All rights reserved.</p>
             </div>
             <div class="footer-links">
+                <a href="guide.html">Guide</a>
                 <a href="legal.html">Terms & Privacy</a>
                 <a href="https://discord.gg/WsnV3MphrJ">Support</a>
             </div>
@@ -238,9 +249,7 @@
     </footer>
 
     <script>
-        // Header scroll effect
         const header = document.querySelector('header');
-
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
                 header.classList.add('scrolled');
@@ -249,18 +258,12 @@
             }
         });
 
-        // Scroll Animation Observer
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-                    observer.unobserve(entry.target); // Only animate once
+                    observer.unobserve(entry.target);
                 }
             });
         }, observerOptions);
