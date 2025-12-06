@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium - Rankup Bot</title>
+    <meta name="description"
+        content="Unlock the full potential of Rankup with Premium. Unlimited ranks, nickname prefixes, audit logs, and more.">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <style>
+        body {
+            background-color: #0f0f0f;
+            overflow-x: hidden;
+        }
+
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            background: radial-gradient(circle at 10% 10%, rgba(255, 153, 0, 0.05), transparent),
+                radial-gradient(circle at 90% 90%, rgba(255, 100, 0, 0.05), transparent);
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: float 20s infinite alternate;
+        }
+
+        .blob:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            width: 500px;
+            height: 500px;
+            background: #ff9900;
+            animation-duration: 25s;
+        }
+
+        .blob:nth-child(2) {
+            bottom: 20%;
+            right: 10%;
+            width: 600px;
+            height: 600px;
+            background: #ff5500;
+            animation-duration: 30s;
+            animation-delay: -5s;
+        }
+
+        .blob:nth-child(3) {
+            top: 40%;
+            left: 40%;
+            width: 400px;
+            height: 400px;
+            background: #ffcc00;
+            animation-duration: 35s;
+            animation-delay: -10s;
+            opacity: 0.2;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate(30px, 50px) scale(1.1);
+            }
+
+            100% {
+                transform: translate(-20px, -30px) scale(0.9);
+            }
+        }
+
+        .premium-hero {
+            position: relative;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 140px 20px 80px;
+            overflow: hidden;
+        }
+
+        .premium-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 153, 0, 0.15) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+        }
+
+        .premium-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .premium-title {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #fff 0%, #ffdb6e 50%, #ff9900 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3s linear infinite;
+            filter: drop-shadow(0 0 30px rgba(255, 153, 0, 0.5));
+            letter-spacing: -1px;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 0% center;
+            }
+
+            100% {
+                background-position: 200% center;
+            }
+        }
+
+        .premium-subtitle {
+            font-size: 1.3rem;
+            color: #bbb;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        /* Pricing Grid */
+        .pricing-grid {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            flex-wrap: wrap;
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto 80px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .pricing-card {
+            background: linear-gradient(145deg, rgba(30, 30, 35, 0.8), rgba(20, 20, 25, 0.9));
+            backdrop-filter: blur(30px);
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 40px 32px;
+            text-align: left;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            flex: 1 1 280px;
+            min-width: 260px;
+            max-width: 300px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, rgba(255, 153, 0, 0.5), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .pricing-card:hover::before {
+            opacity: 1;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: rgba(255, 153, 0, 0.6);
+            box-shadow:
+                0 25px 60px rgba(0, 0, 0, 0.6),
+                0 0 40px rgba(255, 153, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            background: linear-gradient(145deg, rgba(35, 35, 40, 0.9), rgba(25, 25, 30, 0.95));
+            z-index: 5;
+        }
+
+        .pricing-card.featured {
+            background: linear-gradient(145deg,
+                    rgba(255, 153, 0, 0.12),
+                    rgba(30, 30, 35, 0.9));
+            border: 2px solid rgba(255, 153, 0, 0.5);
+            transform: scale(1.08);
+            box-shadow:
+                0 30px 60px rgba(0, 0, 0, 0.6),
+                0 0 50px rgba(255, 153, 0, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            z-index: 10;
+        }
+
+        .pricing-card.featured::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg,
+                    transparent 0%,
+                    transparent 40%,
+                    rgba(255, 153, 0, 0.08) 50%,
+                    transparent 60%,
+                    transparent 100%);
+            animation: rotate-glow 8s linear infinite;
+            filter: blur(20px);
+            pointer-events: none;
+        }
+
+        @keyframes rotate-glow {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .pricing-card.featured:hover {
+            transform: scale(1.12) translateY(-15px);
+            box-shadow:
+                0 35px 70px rgba(0, 0, 0, 0.7),
+                0 0 60px rgba(255, 153, 0, 0.35),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .card-header {
+            margin-bottom: 25px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 20px;
+        }
+
+        .plan-name {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .plan-price {
+            font-size: 2.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff9900, #ffdb6e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 8px rgba(255, 153, 0, 0.3));
+        }
+
+        .plan-period {
+            font-size: 1.1rem;
+            color: #999;
+            font-weight: 500;
+        }
+
+        .features-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            flex-grow: 1;
+        }
+
+        .features-list li {
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #d0d0d0;
+            font-size: 1.05rem;
+            transition: all 0.2s ease;
+        }
+
+        .features-list li:hover {
+            color: #fff;
+            transform: translateX(5px);
+        }
+
+        .features-list li.disabled {
+            color: #555;
+            text-decoration: line-through;
+        }
+
+        .check-icon {
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .cross-icon {
+            color: #555;
+        }
+
+        .premium-badge {
+            position: absolute;
+            top: 20px;
+            right: -35px;
+            background: linear-gradient(135deg, #ff9900, #ffdb6e);
+            color: #000;
+            padding: 8px 50px;
+            transform: rotate(45deg);
+            font-size: 0.85rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+            box-shadow:
+                0 4px 20px rgba(255, 153, 0, 0.6),
+                0 0 30px rgba(255, 153, 0, 0.4);
+            white-space: nowrap;
+            animation: badge-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes badge-pulse {
+
+            0%,
+            100% {
+                box-shadow:
+                    0 4px 20px rgba(255, 153, 0, 0.6),
+                    0 0 30px rgba(255, 153, 0, 0.4);
+            }
+
+            50% {
+                box-shadow:
+                    0 4px 25px rgba(255, 153, 0, 0.8),
+                    0 0 40px rgba(255, 153, 0, 0.6);
+            }
+        }
+
+        /* Feature Showcase */
+        .feature-showcase {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .showcase-item {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            margin-bottom: 100px;
+        }
+
+        .showcase-item.reverse {
+            flex-direction: row-reverse;
+        }
+
+        .showcase-text {
+            flex: 1;
+        }
+
+        .showcase-text h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--text-main);
+        }
+
+        .showcase-text p {
+            font-size: 1.1rem;
+            color: #aaa;
+            line-height: 1.7;
+        }
+
+        .showcase-visual {
+            flex: 1;
+            background: rgba(25, 25, 30, 0.85);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 153, 0, 0.3);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 153, 0, 0.1);
+        }
+
+        .mock-chat {
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .mock-msg {
+            display: flex;
+            gap: 12px;
+        }
+
+        .mock-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #444;
+        }
+
+        .mock-content {
+            flex: 1;
+        }
+
+        .mock-header {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .mock-user {
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .mock-user.admin {
+            color: #ff3333;
+        }
+
+        .mock-timestamp {
+            font-size: 0.75rem;
+            color: #777;
+        }
+
+        .mock-text {
+            color: #dcddde;
+            font-size: 0.95rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .pricing-card {
+                max-width: 45%;
+                flex-basis: 45%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .premium-title {
+                font-size: 2.5rem;
+            }
+
+            .pricing-grid {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .pricing-card {
+                max-width: 100%;
+                width: 100%;
+            }
+
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+
+            .showcase-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 30px;
+            }
+
+            .showcase-item.reverse {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="animated-bg">
+        <div class="blob"></div>
+        <div class="blob"></div>
+        <div class="blob"></div>
+    </div>
+
+    <header class="scrolled">
+        <nav class="container">
+            <a href="index.html" class="logo">
+                <img src="assets/logo.png" alt="Rankup Logo">
+                <span>Rankup</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="guide.html">Guide</a>
+                <a href="premium.html" style="color: var(--primary);">Premium</a>
+                <a href="https://discord.gg/WsnV3MphrJ" target="_blank">Support</a>
+                <a href="https://discord.com/oauth2/authorize?client_id=867132685871480883"
+                    class="btn btn-primary">Invite Bot</a>
+            </div>
+        </nav>
+    </header>
+    <section class="premium-hero">
+        <div class="premium-content">
+            <h1 class="premium-title">Unlock Full Potential</h1>
+            <p class="premium-subtitle">Take your server to the next level with unlimited ranks, custom
+                prefixes, and
+                advanced management tools.</p>
+            <a href="#pricing" class="btn btn-primary btn-lg">View Plans</a>
+        </div>
+    </section>
+
+    <div class="premium-pricing-container" id="pricing" style="max-width: 1400px; margin: 0 auto; padding: 0 20px;">
+        <div class="pricing-grid">
+            <!-- Free Plan -->
+            <div class="pricing-card fade-in">
+                <div class="card-header">
+                    <div class="plan-name">Free</div>
+                    <div class="plan-price">$0</div>
+                    <div class="plan-period">Forever</div>
+                </div>
+                <ul class="features-list">
+                    <li><span class="check-icon">✓</span> <strong>10</strong> Managed Ranks</li>
+                    <li><span class="check-icon">✓</span> <strong>3</strong> Sub-ranks</li>
+                    <li><span class="check-icon">✓</span> Unlimited Tags</li>
+                    <li><span class="check-icon">✓</span> Delegated Promotions</li>
+                    <li class="disabled"><span class="cross-icon">✕</span> Nickname Prefixes</li>
+                    <li class="disabled"><span class="cross-icon">✕</span> Audit Logs</li>
+                </ul>
+            </div>
+
+            <!-- Tier 1 -->
+            <div class="pricing-card fade-in">
+                <div class="card-header">
+                    <div class="plan-name">Guild 1</div>
+                    <div class="plan-price">$5.99<span class="plan-period">/mo</span></div>
+                </div>
+                <ul class="features-list">
+                    <li><span class="check-icon">✓</span> <strong>20</strong> Managed Ranks</li>
+                    <li><span class="check-icon">✓</span> <strong>7</strong> Sub-ranks</li>
+                    <li><span class="check-icon">✓</span> Unlimited Tags</li>
+                    <li><span class="check-icon">✓</span> <strong>Rank Prefixes</strong></li>
+                    <li class="disabled"><span class="cross-icon">✕</span> Audit Logs</li>
+                    <li><span class="check-icon">✓</span> Early Access</li>
+                </ul>
+                <div style="margin-top: 30px; text-align: center;">
+                    <a href="https://discord.com/application-directory/867132685871480883/store"
+                        class="btn btn-secondary btn-lg" style="width: 100%;">Subscribe</a>
+                </div>
+            </div>
+
+            <!-- Tier 2 -->
+            <div class="pricing-card fade-in">
+                <div class="card-header">
+                    <div class="plan-name">Guild 2</div>
+                    <div class="plan-price">$10.99<span class="plan-period">/mo</span></div>
+                </div>
+                <ul class="features-list">
+                    <li><span class="check-icon">✓</span> <strong>40</strong> Managed Ranks</li>
+                    <li><span class="check-icon">✓</span> <strong>15</strong> Sub-ranks</li>
+                    <li><span class="check-icon">✓</span> Unlimited Tags</li>
+                    <li><span class="check-icon">✓</span> <strong>Rank Prefixes</strong></li>
+                    <li><span class="check-icon">✓</span> <strong>Audit Logs</strong></li>
+                    <li><span class="check-icon">✓</span> Priority Support</li>
+                </ul>
+                <div style="margin-top: 30px; text-align: center;">
+                    <a href="https://discord.com/application-directory/867132685871480883/store"
+                        class="btn btn-primary btn-lg" style="width: 100%;">Subscribe</a>
+                </div>
+            </div>
+
+            <!-- Tier 3 -->
+            <div class="pricing-card featured fade-in">
+                <div class="premium-badge">ULTIMATE</div>
+                <div class="card-header">
+                    <div class="plan-name">Guild 3 <span style="font-size: 1.2rem;">👑</span></div>
+                    <div class="plan-price">$15.99<span class="plan-period">/mo</span></div>
+                </div>
+                <ul class="features-list">
+                    <li><span class="check-icon">✓</span> <strong>100</strong> Managed Ranks</li>
+                    <li><span class="check-icon">✓</span> <strong>50</strong> Sub-ranks</li>
+                    <li><span class="check-icon">✓</span> Unlimited Tags</li>
+                    <li><span class="check-icon">✓</span> <strong>Rank Prefixes</strong></li>
+                    <li><span class="check-icon">✓</span> <strong>Audit Logs</strong> (History)</li>
+                    <li><span class="check-icon">✓</span> Priority Support</li>
+                </ul>
+                <div style="margin-top: 30px; text-align: center;">
+                    <a href="https://discord.com/application-directory/867132685871480883/store"
+                        class="btn btn-primary btn-lg" style="width: 100%;">Subscribe</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="feature-showcase">
+        <!-- Feature 1 -->
+        <div class="showcase-item fade-in">
+            <div class="showcase-text">
+                <h3>Unlimited Hierarchy</h3>
+                <p>Don't be limited by 5 ranks. Create a complete chain of command for your entire server.
+                    Perfect for
+                    large communities, military RP, or complex organizations.</p>
+                <ul style="margin-top: 20px; color: #ccc; list-style: disc; padding-left: 20px;">
+                    <li>Up to 100 Ranks</li>
+                    <li>Multiple distinct groups (Tags)</li>
+                    <li>Unrestricted growth</li>
+                </ul>
+            </div>
+            <div class="showcase-visual">
+                <div class="rank-flow">
+                    <span class="rank-badge">Recruit</span> → <span class="rank-badge">Private</span> → <span
+                        class="rank-badge">Corporal</span> → <span class="rank-badge">Sergeant</span> → <span
+                        class="rank-badge">...</span> → <span class="rank-badge">General</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="showcase-item reverse fade-in">
+            <div class="showcase-text">
+                <h3>Nickname Prefixes</h3>
+                <p>Automatically enforce rank prefixes in user nicknames. As soon as a user ranks up, their name
+                    updates
+                    instantly.</p>
+                <p style="margin-top: 10px; font-size: 0.9rem; color: var(--primary);">Exclusive to Premium</p>
+            </div>
+            <div class="showcase-visual">
+                <div class="mock-chat">
+                    <div class="mock-msg">
+                        <div class="mock-avatar"></div>
+                        <div class="mock-content">
+                            <div class="mock-header">
+                                <span class="mock-user admin">[Admin] SuperUser</span>
+                                <span class="mock-timestamp">Today at 9:41 PM</span>
+                            </div>
+                            <div class="mock-text">Welcome to the server! Read the rules.</div>
+                        </div>
+                    </div>
+                    <div class="mock-msg">
+                        <div class="mock-avatar" style="background: #666;"></div>
+                        <div class="mock-content">
+                            <div class="mock-header">
+                                <span class="mock-user">[Member] NewGuy</span>
+                                <span class="mock-timestamp">Today at 9:42 PM</span>
+                            </div>
+                            <div class="mock-text">Thanks! Loving the prefix system.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="showcase-item fade-in">
+            <div class="showcase-text">
+                <h3>Audit Logs & History</h3>
+                <p>Keep track of every promotion, demotion, and nickname change. See exactly who changed what
+                    and when.
+                    Essential for server security.</p>
+            </div>
+            <div class="showcase-visual">
+                <div class="command-example" style="width: 100%; font-size: 0.9rem;">
+                    <strong>/history</strong><br>
+                    <br>
+                    <span style="color: #aaa;">12:00 PM</span> <strong>@Admin</strong> promoted
+                    <strong>@User</strong>
+                    to <span>Captain</span><br>
+                    <span style="color: #aaa;">11:45 AM</span> <strong>@Mod</strong> demoted
+                    <strong>@Troll</strong> to
+                    <span>Muted</span><br>
+                    <span style="color: #aaa;">11:30 AM</span> <strong>@Bot</strong> updated nickname of
+                    <strong>@User</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-left">
+                <div class="logo-small">
+                    <img src="assets/logo.png" alt="Rankup Logo">
+                    <span>Rankup</span>
+                </div>
+                <p>&copy; 2025 Rankup Bot. All rights reserved.</p>
+            </div>
+            <div class="footer-links">
+                <a href="guide.html">Guide</a>
+                <a href="premium.html">Premium</a>
+                <a href="legal.html">Terms & Privacy</a>
+                <a href="https://discord.gg/WsnV3MphrJ">Support</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const header = document.querySelector('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+
+</html>
